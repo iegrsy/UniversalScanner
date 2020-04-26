@@ -42,7 +42,7 @@ namespace UniversalScanner
                 new GoogleCast(),
                 new Hanwha(),
                 new Vivotek(),
-                new Flir(engineMDNS)
+                new Flir()
             };
             foreach(var engine in engines)
             {

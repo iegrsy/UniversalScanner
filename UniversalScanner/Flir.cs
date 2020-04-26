@@ -28,9 +28,9 @@ namespace UniversalScanner
             }
         }
 
-        public Flir(mDNS broker)
+        public Flir()
         {
-            dnsBroker = broker;
+            dnsBroker = mDNS.getInstance();
 
             dnsBroker.registerDomain(domain, flirDeviceFound);
         }
