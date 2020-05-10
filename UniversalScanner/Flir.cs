@@ -120,7 +120,7 @@ namespace UniversalScanner
                 */
 
                 if (serial == null) serial = "unknown";
-                viewer.deviceFound(name, 1, ip.ToString(), deviceModel, serial);
+                viewer.deviceFound(name, 1, ip, deviceModel, serial);
             }
         }
     }
