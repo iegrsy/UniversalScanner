@@ -23,8 +23,6 @@ namespace UniversalScannerLib
 
         static Config()
         {
-            RegistryKey key;
-
             // default values
             enableIPv6 = false;
             forceLinkLocal = true;
@@ -36,35 +34,39 @@ namespace UniversalScannerLib
             portSharing = true;
             onvifVerbatim = false;
 
-            key = Registry.CurrentUser.openOrCreate(path);
-            if (key != null)
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
             {
-                enableIPv6 = key.readBool(nameof(enableIPv6), enableIPv6);
-                key.writeBool(nameof(enableIPv6), enableIPv6);
+                RegistryKey key;
+                key = Registry.CurrentUser.openOrCreate(path);
+                if (key != null)
+                {
+                    enableIPv6 = key.readBool(nameof(enableIPv6), enableIPv6);
+                    key.writeBool(nameof(enableIPv6), enableIPv6);
 
-                forceLinkLocal = key.readBool(nameof(forceLinkLocal), forceLinkLocal);
-                key.writeBool(nameof(forceLinkLocal), forceLinkLocal);
-                
-                enableIPv4 = key.readBool(nameof(enableIPv4), enableIPv4);
-                key.writeBool(nameof(enableIPv4), enableIPv4);
-                
-                forceZeroConf = key.readBool(nameof(forceZeroConf), forceZeroConf);
-                key.writeBool(nameof(forceZeroConf), forceZeroConf);
-                
-                forceGenericProtocols = key.readBool(nameof(forceGenericProtocols), forceGenericProtocols);
-                key.writeBool(nameof(forceGenericProtocols), forceGenericProtocols);
-                
-                clearOnRescan = key.readBool(nameof(clearOnRescan), clearOnRescan);
-                key.writeBool(nameof(clearOnRescan), clearOnRescan);
-                
-                showDebugWarning = key.readBool(nameof(showDebugWarning), showDebugWarning);
-                key.writeBool(nameof(showDebugWarning), showDebugWarning);
+                    forceLinkLocal = key.readBool(nameof(forceLinkLocal), forceLinkLocal);
+                    key.writeBool(nameof(forceLinkLocal), forceLinkLocal);
 
-                portSharing = key.readBool(nameof(portSharing), portSharing);
-                key.writeBool(nameof(portSharing), portSharing);
+                    enableIPv4 = key.readBool(nameof(enableIPv4), enableIPv4);
+                    key.writeBool(nameof(enableIPv4), enableIPv4);
 
-                onvifVerbatim = key.readBool(nameof(onvifVerbatim), onvifVerbatim);
-                key.writeBool(nameof(onvifVerbatim), onvifVerbatim);
+                    forceZeroConf = key.readBool(nameof(forceZeroConf), forceZeroConf);
+                    key.writeBool(nameof(forceZeroConf), forceZeroConf);
+
+                    forceGenericProtocols = key.readBool(nameof(forceGenericProtocols), forceGenericProtocols);
+                    key.writeBool(nameof(forceGenericProtocols), forceGenericProtocols);
+
+                    clearOnRescan = key.readBool(nameof(clearOnRescan), clearOnRescan);
+                    key.writeBool(nameof(clearOnRescan), clearOnRescan);
+
+                    showDebugWarning = key.readBool(nameof(showDebugWarning), showDebugWarning);
+                    key.writeBool(nameof(showDebugWarning), showDebugWarning);
+
+                    portSharing = key.readBool(nameof(portSharing), portSharing);
+                    key.writeBool(nameof(portSharing), portSharing);
+
+                    onvifVerbatim = key.readBool(nameof(onvifVerbatim), onvifVerbatim);
+                    key.writeBool(nameof(onvifVerbatim), onvifVerbatim);
+                }
             }
         }
     }
