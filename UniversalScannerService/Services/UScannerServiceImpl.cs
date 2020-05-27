@@ -20,17 +20,18 @@ namespace UniversalScannerService
         public UScannerServiceImpl(ILogger<UScannerServiceImpl> logger)
         {
             Console.WriteLine("Create UScannerServiceImpl");
-            
+
             RegisterScanning(this);
-            new Task(() => {
+            new Task(() =>
+            {
                 while (true)
                 {
                     if (ScanCancellationToken.IsCancellationRequested) break;
-                    
-                    scanEvent.Invoke();
-                    Console.WriteLine("Rescan started...");
 
-                    System.Threading.Thread.Sleep(1000 * 10 * 1); // Sleep 1 minute
+                    scanEvent.Invoke();
+                    Console.Write($"\r{DateTime.UtcNow.ToString("MM/dd/yyyy HH:mm:ss")} Rescan started");
+
+                    System.Threading.Thread.Sleep(1000 * 20 * 1); // Sleep 20 seconds
                 }
             }, ScanCancellationToken).Start();
 
@@ -56,7 +57,10 @@ namespace UniversalScannerService
                     isFound = true;
 
             if (!isFound)
+            {
                 FoundDeviceList.List.Add(newDevice);
+                System.Console.WriteLine($"New found device:\n{newDevice}");
+            }
         }
 
         public void formatProtocol(string protocol, int color)
