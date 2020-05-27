@@ -14,15 +14,54 @@ namespace UniversalScannerLib
     {
         // NetworkToHostOrder and HostToNetworkOrder are unsafe due type overload
         // UInt64 ntohll(UInt64) and UInt64 htonll(UInt64) defined bellow
-        [DllImport("wsock32.dll")]
-        public static extern UInt32 ntohl(UInt32 value);
-        [DllImport("wsock32.dll")]
-        public static extern UInt32 htonl(UInt32 value);
-        [DllImport("wsock32.dll")]
-        public static extern UInt16 ntohs(UInt16 value);
-        [DllImport("wsock32.dll")]
-        public static extern UInt16 htons(UInt16 value);
+
+        // [DllImport("wsock32.dll")]
+        // public static extern UInt32 ntohl(UInt32 value);
+        // [DllImport("wsock32.dll")]
+        // public static extern UInt32 htonl(UInt32 value);
+        // [DllImport("wsock32.dll")]
+        // public static extern UInt16 ntohs(UInt16 value);
+        // [DllImport("wsock32.dll")]
+        // public static extern UInt16 htons(UInt16 value);
+
+        /* Use http://www.jbox.dk/sanos/source/include/arpa/inet.h.html
         
+        __inline unsigned short htons(unsigned short n) {
+        return ((n & 0xFF) << 8) | ((n & 0xFF00) >> 8);
+        }
+
+        __inline unsigned short ntohs(unsigned short n) {
+        return ((n & 0xFF) << 8) | ((n & 0xFF00) >> 8);
+        }
+
+        __inline unsigned long htonl(unsigned long n) {
+        return ((n & 0xFF) << 24) | ((n & 0xFF00) << 8) | ((n & 0xFF0000) >> 8) | ((n & 0xFF000000) >> 24);
+        }
+
+        __inline unsigned long ntohl(unsigned long n) {
+        return ((n & 0xFF) << 24) | ((n & 0xFF00) << 8) | ((n & 0xFF0000) >> 8) | ((n & 0xFF000000) >> 24);
+        }
+        */
+
+        public static UInt32 ntohl(UInt32 n)
+        {
+            return ((n & 0xFF) << 24) | ((n & 0xFF00) << 8) | ((n & 0xFF0000) >> 8) | ((n & 0xFF000000) >> 24);
+        }
+        public static UInt32 htonl(UInt32 n)
+        {
+            return ((n & 0xFF) << 24) | ((n & 0xFF00) << 8) | ((n & 0xFF0000) >> 8) | ((n & 0xFF000000) >> 24);
+        }
+        public static UInt16 ntohs(UInt16 n)
+        {
+            var s = ((n & 0xFF) << 8) | ((n & 0xFF00) >> 8);
+            return Convert.ToUInt16(s);
+        }
+        public static UInt16 htons(UInt16 n)
+        {
+            var s = ((n & 0xFF) << 8) | ((n & 0xFF00) >> 8);
+            return Convert.ToUInt16(s);
+        }
+
         public static UInt64 htonll(UInt64 value)
         {
             if (htonl(1) != 1)
